@@ -25,6 +25,10 @@ using namespace std;
 class Piece {
 public:
 	Piece(bool couleur) { couleur_ = couleur; }
+	virtual ~Piece() = default;
+	Piece(const Piece&) = delete;
+	Piece& operator= (const Piece&) = delete;
+
 	bool setPosition(int positionLigne, int positionColonne) { 
 		if (this->mouvementValide(positionLigne, positionColonne)) {
 			positionLigne_ = positionLigne;
@@ -44,6 +48,7 @@ protected:
 	int positionLigne_=0;
 	int positionColonne_=0;
 	bool couleur_; //0 = blanc, 1 = noir
+
 	virtual bool mouvementValide(int positionLigneVoulue, int positionColonneVoulue) {
 		if ((positionLigneVoulue < 0) | (positionLigneVoulue >= NBR_LIGNES)) return false;
 		else if ((positionColonneVoulue < 0) | (positionColonneVoulue >= NBR_COLONNES)) return false;
@@ -229,6 +234,7 @@ public:
 
 private:
 	Piece* echiquier_[NBR_LIGNES][NBR_COLONNES]; // un jeu d'échecs a 64 cases
+
 	bool echangerPiece(int positionActuelleX, int positionActuelleY, int positionVoulueX, int positionVoulueY, bool pieceAdverse) {
 		if (echiquier_[positionActuelleX][positionActuelleY]->setPosition(positionVoulueX, positionVoulueY)) { //on change les attributs de la piece quon bouge si le mouvement est valide
 			//on rentre ici si le mouvement est valide
@@ -239,6 +245,7 @@ private:
 		}
 		return false;
 	}
+
 	//puisque la seule piece dans notre cas qui peut rencontrer une piece dans son chemin est la tour, le code suitant sera implementer en consequent. 
 	//Si jamais une version complete du jeu voudra etre faites, le code suivant devra etre changer pour considerer que le fou et la reine (le pion aussi lorsquil avance de deux) pouraient avoir se probleme.
 	bool pieceEnChemin(int positionActuelleX, int positionActuelleY, int positionVoulueX, int positionVoulueY) { 
