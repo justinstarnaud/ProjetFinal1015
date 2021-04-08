@@ -88,12 +88,23 @@ TEST(TestEchiquier, TestPieceEnChemin) {
 }
 
 TEST(TestEchiquier, TestManger) {
+	Echiquier echiquier = Echiquier();
 	Tour tourNoire = Tour(noir, gauche);
 	Tour tourBlanche = Tour(blanc, gauche);
-	Echiquier echiquier = Echiquier();
-	//EXPECT_EQ(tourNoire.getCouleur() , echiquier.getPiece(7, 0)->getCouleur());
+	tourBlanche.setPosition(7, 0);
+
+	//On test qu'il y a une tour blanche a la position 7,0 de l'echiquier
+	EXPECT_EQ(tourNoire.getCouleur() , echiquier.getPiece(7, 0)->getCouleur());
+	EXPECT_EQ(tourNoire.getPosition().first, echiquier.getPiece(7, 0)->getPosition().first);
+	EXPECT_EQ(tourNoire.getPosition().second, echiquier.getPiece(7, 0)->getPosition().second);
+
+	//On test que le mouvement de la tour blanche mangeant la tour noire est faisable
 	EXPECT_TRUE(echiquier.effectuerMouvement(0, 0, 7, 0));
-	//EXPECT_EQ()
+
+	//On test qu'il y a maintenant une tour blanche a la position 7,0 de l'echiquier
+	EXPECT_EQ(tourBlanche.getCouleur(), echiquier.getPiece(7, 0)->getCouleur());
+	EXPECT_EQ(tourBlanche.getPosition().first, echiquier.getPiece(7, 0)->getPosition().first);
+	EXPECT_EQ(tourBlanche.getPosition().second, echiquier.getPiece(7, 0)->getPosition().second);
 
 
 }
