@@ -93,7 +93,10 @@ TEST(TestEchiquier, TestPieceEnChemin) {
 }
 
 TEST(TestEchiquier, TestManger) {
+	Tour tourNoire = Tour(NOIR, GAUCHE);
+	Tour tourBlanche = Tour(BLANC, GAUCHE);
 	Echiquier echiquier = Echiquier();
+	EXPECT_EQ(tourNoire, echiquier.getPiece(7,0));
 	EXPECT_TRUE(echiquier.effectuerMouvement(0, 0, 7, 0));
 	//EXPECT_EQ()
 
