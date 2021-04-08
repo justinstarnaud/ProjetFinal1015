@@ -15,12 +15,12 @@ Créé le 1 avril 2021
 #include <memory>
 #include <algorithm>
 using namespace std;
-#define GAUCHE 0
-#define DROITE 1
-#define BLANC 0
-#define NOIR 1
-#define NBR_LIGNES 8
-#define NBR_COLONNES 8
+static constexpr int gauche = 0;
+static constexpr int droite = 1;
+static constexpr int blanc = 0;
+static constexpr int noir = 1;
+static constexpr int nLignes = 8;
+static constexpr int nColonnes = 8;
 
 
 class Piece {
@@ -51,8 +51,8 @@ protected:
 	bool couleur_; //0 = blanc, 1 = noir
 
 	virtual bool mouvementValide(int positionLigneVoulue, int positionColonneVoulue) {
-		if ((positionLigneVoulue < 0) | (positionLigneVoulue >= NBR_LIGNES)) return false;
-		else if ((positionColonneVoulue < 0) | (positionColonneVoulue >= NBR_COLONNES)) return false;
+		if ((positionLigneVoulue < 0) | (positionLigneVoulue >= nLignes)) return false;
+		else if ((positionColonneVoulue < 0) | (positionColonneVoulue >= nColonnes)) return false;
 		else if ((positionColonneVoulue == positionColonne_ && positionLigneVoulue == positionLigne_)) return false;
 		return true;
 	}
@@ -179,16 +179,16 @@ public:
 class Echiquier {
 public:
 	Echiquier() {
-		for (int ligne = 0; ligne < NBR_LIGNES; ligne++) {
-			for (int colonne = 0; colonne < NBR_COLONNES; colonne++) {
+		for (int ligne = 0; ligne < nLignes; ligne++) {
+			for (int colonne = 0; colonne < nColonnes; colonne++) {
 				echiquier_[ligne][colonne] = nullptr;
 				if (ligne == 0) {
 
-					if (colonne == 0) echiquier_[ligne][colonne] = new Tour(BLANC, GAUCHE);
-					if (colonne == 1) echiquier_[ligne][colonne] = new Cavalier(BLANC, GAUCHE);
-					else if (colonne == 4) echiquier_[ligne][colonne] = new Roi(BLANC);
-					else if (colonne == 6) echiquier_[ligne][colonne] = new Cavalier(BLANC, DROITE);
-					else if (colonne == 7) echiquier_[ligne][colonne] = new Tour(BLANC, DROITE);
+					if (colonne == 0) echiquier_[ligne][colonne] = new Tour(blanc, gauche);
+					if (colonne == 1) echiquier_[ligne][colonne] = new Cavalier(blanc, gauche);
+					else if (colonne == 4) echiquier_[ligne][colonne] = new Roi(blanc);
+					else if (colonne == 6) echiquier_[ligne][colonne] = new Cavalier(blanc, droite);
+					else if (colonne == 7) echiquier_[ligne][colonne] = new Tour(blanc, droite);
 				}
 				//else if (ligne == 1) echiquier_[ligne][colonne] = new Pion(BLANC, colonne); // pions blancs
 
@@ -196,19 +196,19 @@ public:
 
 				else if (ligne == 7) {
 
-					if (colonne == 0) echiquier_[ligne][colonne] = new Tour(NOIR, GAUCHE);
-					else if (colonne == 1) echiquier_[ligne][colonne] = new Cavalier(NOIR, GAUCHE);
-					else if (colonne == 4) echiquier_[ligne][colonne] = new Roi(NOIR);
-					else if (colonne == 6) echiquier_[ligne][colonne] = new Cavalier(NOIR, DROITE);
-					else if (colonne == 7) echiquier_[ligne][colonne] = new Tour(NOIR, DROITE);
+					if (colonne == 0) echiquier_[ligne][colonne] = new Tour(noir, gauche);
+					else if (colonne == 1) echiquier_[ligne][colonne] = new Cavalier(noir, gauche);
+					else if (colonne == 4) echiquier_[ligne][colonne] = new Roi(noir);
+					else if (colonne == 6) echiquier_[ligne][colonne] = new Cavalier(noir, droite);
+					else if (colonne == 7) echiquier_[ligne][colonne] = new Tour(noir, droite);
 				}
 			}
 		}		
 	}
 	
 	~Echiquier() {
-		for (int ligne = 0; ligne < NBR_LIGNES; ligne++) {
-			for (int colonne = 0; colonne < NBR_COLONNES; colonne++) {
+		for (int ligne = 0; ligne < nLignes; ligne++) {
+			for (int colonne = 0; colonne < nColonnes; colonne++) {
 				delete echiquier_[ligne][colonne];
 			}
 		}
@@ -234,7 +234,7 @@ public:
 	}
 
 private:
-	Piece* echiquier_[NBR_LIGNES][NBR_COLONNES]; // un jeu d'échecs a 64 cases
+	Piece* echiquier_[nLignes][nColonnes]; // un jeu d'échecs a 64 cases
 
 	bool echangerPiece(int positionActuelleX, int positionActuelleY, int positionVoulueX, int positionVoulueY, bool pieceAdverse) {
 		if (echiquier_[positionActuelleX][positionActuelleY]->setPosition(positionVoulueX, positionVoulueY)) { //on change les attributs de la piece quon bouge si le mouvement est valide
