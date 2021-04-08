@@ -1,11 +1,6 @@
 #include "classes_projet.hpp"
 #include "gtest/gtest.h"
 
-static constexpr int gauche = 0;
-static constexpr int droite = 1;
-static constexpr int blanc = 0;
-static constexpr int noir = 1;
-
 TEST(TestRoi, TestInitilisation) {
 	Roi roi = Roi(blanc);
 	EXPECT_EQ(blanc, roi.getCouleur());
