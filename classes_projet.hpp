@@ -13,6 +13,7 @@ Créé le 1 avril 2021
 #include <iostream>
 #include <vector>
 #include <memory>
+#include <algorithm>
 using namespace std;
 #define GAUCHE 0
 #define DROITE 1
@@ -251,14 +252,15 @@ private:
 	bool pieceEnChemin(int positionActuelleX, int positionActuelleY, int positionVoulueX, int positionVoulueY) { 
 		int variationLigne = abs(positionActuelleX - positionVoulueX);
 		int variationColonne = abs(positionActuelleY - positionVoulueY);
-
 		if (variationLigne > 0) {
-			for (int i = positionActuelleX; i < positionVoulueX; i++) { //on ne regarde pas sil y a une piece a la positon voulu, ceci est deja considerer dans la fonction effectuerMouvement
+			auto position = minmax(positionActuelleX, positionVoulueX);
+			for (int i = position.first + 1; i < position.second; i++) { //on ne regarde pas sil y a une piece a la positon acteulle ni voulu, car ceci est deja considerer dans la fonction effectuerMouvement
 				if (echiquier_[i][positionActuelleY] != nullptr) return true;
 			}
 		}
 		else {
-			for (int i = positionActuelleY; i < positionVoulueY; i++) { //on ne regarde pas sil y a une piece a la positon voulu, ceci est deja considerer dans la fonction effectuerMouvement
+			auto position = minmax(positionActuelleY, positionVoulueY);
+			for (int i = position.first + 1; i < position.second; i++) { //on ne regarde pas sil y a une piece a la positon actuelle ni voulu, ceci est deja considerer dans la fonction effectuerMouvement
 				if (echiquier_[positionActuelleX][i] != nullptr) return true;
 			}
 		}
